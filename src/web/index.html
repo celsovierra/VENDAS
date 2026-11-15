@@ -28,7 +28,26 @@ th{background:#f9fafb}
 <div class="card">Lucro<b>R$ 0,00</b></div></div>
 <h3 style="margin:16px 0">Produtos cadastrados</h3>
 <table><thead><tr><th>SKU</th><th>Título</th><th>Custo</th><th>Venda</th><th>Estoque</th></tr></thead>
-<tbody id="t"></tbody></table></main>
+<tbody id="t"></tbody></table><h3 style="margin:24px 0 12px">Novo produto</h3>
+<form id="f" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;background:#fff;padding:16px;border-radius:10px;box-shadow:0 1px 3px #0002">
+<input name="sku" placeholder="SKU" required>
+<input name="title" placeholder="Título" required>
+<input name="cost_price" type="number" step="0.01" placeholder="Custo (R$)">
+<input name="sale_price" type="number" step="0.01" placeholder="Venda (R$)">
+<input name="stock" type="number" placeholder="Estoque">
+<input name="temu_url" placeholder="Link Temu">
+<input name="temu_supplier" placeholder="Fornecedor Temu">
+<button style="background:#111827;color:#fff;border:0;border-radius:6px;padding:10px;cursor:pointer">Salvar</button>
+</form>
+<style>input{padding:10px;border:1px solid #d1d5db;border-radius:6px}</style>
+<script>
+document.getElementById('f').onsubmit=async e=>{e.preventDefault();
+const d=Object.fromEntries(new FormData(e.target));
+['cost_price','sale_price'].forEach(k=>d[k]=parseFloat(d[k])||0);d.stock=parseInt(d.stock)||0;
+const r=await fetch('/api/products',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
+if(r.ok)location.reload();else alert((await r.json()).detail||'Erro')}
+</script>
+</main>
 <script>
 fetch('/api/products').then(r=>r.json()).then(l=>{
 document.getElementById('n').textContent=l.length;
