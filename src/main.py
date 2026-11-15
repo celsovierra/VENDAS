@@ -88,3 +88,24 @@ def create_order(o: OrderIn, db: Session = Depends(get_db)):
     obj.profit = o.total - o.marketplace_fee - o.shipping_cost - o.product_cost
     db.add(obj); db.commit(); db.refresh(obj)
     return obj
+
+class SettingIn(BaseModel):
+    key: str
+    value: str
+
+@app.get("/api/settings")
+def get_settings(db: Session = Depends(get_db)):
+    rows = db.query(models.Setting).all()
+    return {r.key: ("***" if "secret" in r.key.lower() else r.value) for r in rows}
+
+@app.post("/api/settings")
+def save_setting(s: SettingIn, db: Session = Depends(get_db)):
+    row = db.get(models.Setting, s.key)
+    if row: row.value = s.value
+    else: db.add(models.Setting(key=s.key, value=s.value))
+    db.commit()
+    return {"ok": True}
+
+@app.get("/config", include_in_schema=False)
+def config_page():
+    return FileResponse("src/web/config.html")

@@ -51,3 +51,8 @@ class OrderItem(Base):
     quantity = Column(Integer, default=1)
     unit_price = Column(Float, default=0)
     order = relationship("Order", back_populates="items")
+
+class Setting(Base):
+    __tablename__ = "settings"
+    key = Column(String, primary_key=True)
+    value = Column(String)

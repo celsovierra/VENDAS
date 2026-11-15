@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Configurações</title>
+<style>
+*{box-sizing:border-box;margin:0;font-family:system-ui,sans-serif}
+body{display:flex;min-height:100vh;background:#f3f4f6}
+nav{width:220px;background:#111827;color:#fff;padding:20px}
+nav h2{margin-bottom:20px;font-size:18px}
+nav a{display:block;padding:10px;color:#d1d5db;text-decoration:none;border-radius:6px}
+nav a:hover,nav a.on{background:#374151;color:#fff}
+main{flex:1;padding:24px;max-width:640px}
+.box{background:#fff;padding:20px;border-radius:10px;box-shadow:0 1px 3px #0002;margin-top:16px;display:grid;gap:10px}
+input{padding:10px;border:1px solid #d1d5db;border-radius:6px}
+button{background:#111827;color:#fff;border:0;border-radius:6px;padding:10px;cursor:pointer}
+small{color:#6b7280}
+@media(max-width:700px){body{flex-direction:column}nav{width:100%}}
+</style></head><body>
+<nav><h2>📦 Vendas</h2><a href="/">Painel</a><a class="on" href="/config">Configurações</a></nav>
+<main><h1>Configurações</h1>
+<div class="box"><h3>Mercado Livre</h3>
+<label>App ID<input id="ml_app_id"></label>
+<label>Secret<input id="ml_secret" type="password" placeholder="Cole a nova Secret"></label>
+<small id="st"></small>
+<button onclick="salvar()">Salvar</button></div></main>
+<script>
+const post=(k,v)=>fetch('/api/settings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:k,value:v})});
+fetch('/api/settings').then(r=>r.json()).then(s=>{
+document.getElementById('ml_app_id').value=s.ml_app_id||'';
+document.getElementById('st').textContent=s.ml_secret?'Secret: salva ✓':'Secret: não informada'});
+async function salvar(){
+const a=document.getElementById('ml_app_id').value.trim(),s=document.getElementById('ml_secret').value.trim();
+if(a)await post('ml_app_id',a);if(s)await post('ml_secret',s);
+document.getElementById('ml_secret').value='';location.reload()}
+</script></body></html>
