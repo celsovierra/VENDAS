@@ -1,0 +1,7 @@
+requests
+python-dotenv
+fastapi
+uvicorn
+sqlalchemy
+pandas
+jinja2
