@@ -62,3 +62,8 @@ def create_product(p: ProductIn, db: Session = Depends(get_db)):
     obj = models.Product(**p.model_dump())
     db.add(obj); db.commit(); db.refresh(obj)
     return obj
+
+from fastapi.responses import FileResponse
+@app.get("/", include_in_schema=False)
+def home():
+    return FileResponse("src/web/index.html")

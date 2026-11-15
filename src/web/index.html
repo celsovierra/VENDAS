@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Gestão de Vendas</title>
+<style>
+*{box-sizing:border-box;margin:0;font-family:system-ui,sans-serif}
+body{display:flex;min-height:100vh;background:#f3f4f6;color:#111}
+nav{width:220px;background:#111827;color:#fff;padding:20px}
+nav h2{margin-bottom:20px;font-size:18px}
+nav a{display:block;padding:10px;color:#d1d5db;text-decoration:none;border-radius:6px}
+nav a:hover,nav a.on{background:#374151;color:#fff}
+main{flex:1;padding:24px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin:16px 0}
+.card{background:#fff;padding:20px;border-radius:10px;box-shadow:0 1px 3px #0002}
+.card b{display:block;font-size:26px;margin-top:6px}
+table{width:100%;background:#fff;border-collapse:collapse;border-radius:10px;overflow:hidden}
+th,td{padding:12px;text-align:left;border-bottom:1px solid #e5e7eb}
+th{background:#f9fafb}
+@media(max-width:700px){body{flex-direction:column}nav{width:100%}}
+</style></head><body>
+<nav><h2>📦 Vendas</h2>
+<a class="on" href="/">Painel</a><a href="#">Pedidos</a><a href="#">Produtos</a>
+<a href="#">Anúncios</a><a href="#">Etiquetas</a><a href="#">Financeiro</a></nav>
+<main><h1>Painel</h1>
+<div class="cards">
+<div class="card">Produtos<b id="n">0</b></div>
+<div class="card">Pedidos<b>0</b></div>
+<div class="card">Lucro<b>R$ 0,00</b></div></div>
+<h3 style="margin:16px 0">Produtos cadastrados</h3>
+<table><thead><tr><th>SKU</th><th>Título</th><th>Custo</th><th>Venda</th><th>Estoque</th></tr></thead>
+<tbody id="t"></tbody></table></main>
+<script>
+fetch('/api/products').then(r=>r.json()).then(l=>{
+document.getElementById('n').textContent=l.length;
+document.getElementById('t').innerHTML=l.map(p=>`<tr><td>${p.sku}</td><td>${p.title}</td><td>R$ ${p.cost_price.toFixed(2)}</td><td>R$ ${p.sale_price.toFixed(2)}</td><td>${p.stock}</td></tr>`).join('')})
+</script></body></html>
