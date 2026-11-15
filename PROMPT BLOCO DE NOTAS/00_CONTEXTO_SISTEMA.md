@@ -1,57 +1,58 @@
-# CONTEXTO DO PROJETO: GESTÃO DE VENDAS (SHOPEE + MERCADO LIVRE)
+cat > "PROMPT BLOCO DE NOTAS/00_CONTEXTO_SISTEMA.md" << 'EOF'
+# CONTEXTO: SISTEMA DE GESTÃO DE VENDAS (SHOPEE + MERCADO LIVRE)
 
 ## Como trabalhar comigo
-- Respostas curtas.
-- Sempre enviar em forma de COMANDO DE TERMINAL (colar no Codespaces), um por vez.
-- Comandos pequenos para não truncar ao colar.
-- Não avançar de etapa sem testar a anterior.
-- Usar APIs oficiais das plataformas.
-- Interface moderna, profissional e responsiva.
+- Respostas curtas, UM passo por vez.
+- Sempre em COMANDO DE TERMINAL (Codespaces), pequeno para não truncar.
+- Todo comando que abrir área de teste já inclui git add/commit/push.
+- Não avançar sem testar a etapa anterior.
+- APIs oficiais. Interface moderna e responsiva.
+- Nunca pedir nem colar Secrets no chat.
 
 ## Objetivo
-Centralizar vendas da Shopee e Mercado Livre:
-1. Integrar contas Shopee e Mercado Livre
-2. Receber vendas automaticamente
-3. Exibir pedidos, produtos, valores e status
-4. Gerar/imprimir etiquetas de envio
-5. Cadastrar produtos e criar anúncios
-6. Publicar anúncios nas duas plataformas com um clique
-7. Identificar produto vendido e fornecedor na Temu
-8. Controlar custos, taxas, fretes e lucro por venda
-9. Compra na Temu manual (por enquanto)
-10. Estrutura pronta para automatizar compras na Temu no futuro
+1 Integrar Shopee e Mercado Livre | 2 Receber vendas | 3 Exibir pedidos/valores/status
+4 Etiquetas de envio | 5 Cadastrar produtos e anúncios | 6 Publicar com 1 clique
+7 Ligar produto vendido ao fornecedor Temu | 8 Custos, taxas, frete, lucro
+9 Compra na Temu manual | 10 Estrutura pronta para automatizar Temu
 
 ## Ambiente
-- GitHub Codespaces, repositório VENDAS (/workspaces/VENDAS)
-- Python 3 + venv em .venv (ativar: source .venv/bin/activate)
-- FastAPI + Uvicorn + SQLAlchemy + SQLite (data/vendas.db)
-- Rodar API: uvicorn src.main:app --host 0.0.0.0 --port 8000
-- Teste: curl localhost:8000/api/health
+- GitHub Codespaces, repo celsovierra/VENDAS (/workspaces/VENDAS)
+- Python venv (.venv), FastAPI + Uvicorn + SQLAlchemy + SQLite (data/vendas.db)
+- Rodar: uvicorn src.main:app --host 0.0.0.0 --port 8000
+- Painel: URL da porta 8000 do Codespace; /config = Configurações; /docs = testes API
 
-## Estrutura de pastas
-VENDAS/
-- PROMPT BLOCO DE NOTAS/   (contexto para novos chats)
-- src/main.py              (app FastAPI)
-- src/core/database.py     (engine, SessionLocal, Base, get_db)
-- src/core/models.py       (Product, Listing, Order, OrderItem)
-- src/shopee/              (integração Shopee)
-- src/mercadolivre/        (integração Mercado Livre)
-- data/vendas.db           (banco SQLite)
-- tests/
-- .env                     (chaves de API, fora do GitHub)
-- requirements.txt
+## Estrutura
+- src/main.py (rotas), src/core/database.py, src/core/models.py
+- src/web/index.html (painel), src/web/config.html (configurações)
+- src/shopee/, src/mercadolivre/ (integrações, ainda vazias)
+- PROMPT BLOCO DE NOTAS/ (este arquivo), .env (fora do GitHub)
 
-## Tabelas
-- products: sku, title, description, cost_price, sale_price, stock, temu_url, temu_supplier
-- listings: product_id, marketplace, external_id, status
-- orders: marketplace, external_id, buyer_name, status, total, marketplace_fee, shipping_cost, product_cost, profit, temu_purchased, temu_order_ref
-- order_items: order_id, product_id, title, quantity, unit_price
+## Banco (tabelas)
+products, listings, orders, order_items, settings(key,value)
+
+## Rotas prontas
+GET /api/health | GET,POST /api/products | GET,POST /api/orders (lucro = total - taxa - frete - custo)
+GET,POST /api/settings (Secret nunca volta, retorna ***) | GET / | GET /config
+
+## Mercado Livre
+- App "mod novo guimod" (nome curto GPScell), ID 984001453967681, criado antes como app Mercado Pago
+- Brasil permite só 1 app por conta, por isso foi reaproveitado e configurado para Mercado Livre
+- Redirect URI: https://effective-guide-4j6g5jw7wv5v3qr4j-8000.app.github.dev/api/ml/callback
+- Fluxos marcados: Authorization Code, Refresh Token. Permissões: leitura/escrita
+- NÃO MEXER na URL de notificação gpscell.site/api-financeiro/webhook/mercadopago (outro sistema em uso)
+- Secret anterior apareceu em print: GERAR NOVA (três pontinhos > Renove agora) e salvar só em /config
 
 ## Progresso
-- [x] Etapa 1: banco de dados e modelos (testado)
-- [x] Etapa 2.1: API base /api/health (testado)
-- [ ] Etapa 2.2: rotas de produtos
-- [ ] Próximas: painel web, pedidos, integração ML, integração Shopee, etiquetas, anúncios, custos/lucro, Temu
+- [x] 1 Banco e modelos
+- [x] 2 API produtos
+- [x] 3 Painel e cadastro de produtos
+- [x] 4 Pedidos com cálculo de lucro
+- [x] 5.1 Tela Configurações (App ID e Secret no sistema)
+- [ ] 5.2 Login OAuth Mercado Livre (/api/ml/login e /api/ml/callback) e guardar tokens
+- [ ] 5.3 Importar vendas do ML automaticamente
+- [ ] Etiquetas ML | Integração Shopee | Anúncios 1 clique | Vínculo Temu | Financeiro
 
 ## Como usar em novo chat
-Colar este arquivo inteiro na primeira mensagem e dizer: "Continue de onde parei".
+Colar este arquivo na primeira mensagem e dizer: "Continue de onde parei".
+EOF
+cat "PROMPT BLOCO DE NOTAS/00_CONTEXTO_SISTEMA.md" && git add -A && git commit -m "Atualiza contexto" && git push

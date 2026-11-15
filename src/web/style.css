@@ -1,0 +1,11 @@
+:root{--azul:#2563eb;--escuro:#0b2447}
+body{background:#eef2f9}
+nav{width:260px;background:linear-gradient(180deg,#0b2447,#071a36)}
+nav h2{font-size:22px;color:#fff}
+nav a{padding:13px 14px;margin-bottom:4px;border-radius:10px}
+nav a.on{background:var(--azul);color:#fff;font-weight:600}
+h1,h3{color:var(--escuro)}
+.card,.box,table,form{border-radius:14px!important;box-shadow:0 2px 8px #0b244714!important}
+th{background:#eaf1ff;color:var(--escuro)}
+button{background:var(--azul)!important;border-radius:10px!important}
+input,select{border-radius:10px!important}
