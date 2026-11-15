@@ -25,3 +25,31 @@ body{display:block!important}
 #top button{display:none;background:none!important;color:#0b2447;font-size:22px;border:0}
 main{margin-left:260px;max-width:none!important}
 @media(max-width:800px){#side{display:none}#side.open{display:block}main,#top{margin-left:0}#top button{display:block}}
+.az{color:#2563eb!important}
+#side{width:296px;padding:24px 16px}
+#side .logo{display:flex;gap:12px;align-items:center;color:#fff;font-size:34px;line-height:1;margin:0}
+#side .logo b{display:block;font-weight:800}
+.pin{width:54px;height:54px;border-radius:50% 50% 50% 8px;transform:rotate(-45deg);background:#2563eb;display:flex;align-items:center;justify-content:center;color:#fff;flex:none}
+.pin i{transform:rotate(45deg);font-size:22px}
+#side .sub{color:#e2e8f0;font-size:15px;margin:14px 0 22px;text-align:center}
+#side a{font-size:17px;padding:14px 16px;border-radius:12px;position:relative}
+#side a i{width:26px;text-align:center;font-size:18px}
+#side a em{margin-left:auto;background:#ef4444;color:#fff;border-radius:99px;font-style:normal;font-size:13px;padding:2px 8px}
+#side .stat{background:#0f3a5f;border-radius:14px;padding:14px;text-align:center;margin-top:24px}
+#side .stat b{display:block;color:#4ade80}
+#side .promo{display:flex;gap:10px;align-items:center;background:#1d4ed8;border-radius:14px;padding:14px;margin-top:14px;color:#fff}
+#side .promo .pin{width:38px;height:38px}
+#side .promo .pin i{font-size:15px}
+#side .promo small{display:block;font-size:12px;color:#dbeafe}
+#top{margin-left:296px;padding:12px 28px}
+#top .l{display:flex;gap:18px;align-items:center}
+#top .l button{display:block;font-size:22px;color:#0b2447!important;background:none!important}
+#top h2{font-size:30px;font-weight:800}
+#top .r{display:flex;gap:16px;align-items:center}
+#top .r b{display:block;color:#0b2447}
+#top .r small{color:#64748b}
+.bell{position:relative;font-size:22px;color:#0b2447}
+.bell em{position:absolute;top:-8px;right:-10px;background:#ef4444;color:#fff;font-size:11px;font-style:normal;border-radius:99px;padding:1px 6px}
+.av{width:44px;height:44px;border-radius:50%;background:#94a3b8;color:#fff;display:flex;align-items:center;justify-content:center}
+main{margin-left:296px}
+@media(max-width:800px){main,#top{margin-left:0}}
