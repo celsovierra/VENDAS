@@ -9,3 +9,19 @@ h1,h3{color:var(--escuro)}
 th{background:#eaf1ff;color:var(--escuro)}
 button{background:var(--azul)!important;border-radius:10px!important}
 input,select{border-radius:10px!important}
+body{display:block!important}
+#side{position:fixed;top:0;left:0;bottom:0;width:260px;background:linear-gradient(180deg,#0b2447,#071a36);padding:20px 16px;overflow:auto;z-index:5}
+#side .logo{color:#fff;font-size:20px;margin-bottom:24px;line-height:1.3}
+#side .logo span,#top span{color:#2563eb}
+#side .logo small{display:block;font-size:12px;color:#cbd5e1;font-weight:400}
+#side a{display:flex;gap:12px;align-items:center;padding:12px 14px;margin-bottom:4px;color:#e2e8f0;text-decoration:none;border-radius:10px}
+#side a:hover{background:#1e3a6e}
+#side a.on{background:#2563eb;color:#fff;font-weight:600}
+#side i{font-style:normal;width:22px}
+#side .stat{margin-top:20px;padding:14px;border-radius:12px;background:#0f2f5f;color:#4ade80;font-size:13px}
+#side .stat small{color:#cbd5e1}
+#top{margin-left:260px;background:#fff;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;box-shadow:0 1px 6px #0b244714}
+#top h2{color:#0b2447;font-size:24px}
+#top button{display:none;background:none!important;color:#0b2447;font-size:22px;border:0}
+main{margin-left:260px;max-width:none!important}
+@media(max-width:800px){#side{display:none}#side.open{display:block}main,#top{margin-left:0}#top button{display:block}}
