@@ -67,3 +67,24 @@ from fastapi.responses import FileResponse
 @app.get("/", include_in_schema=False)
 def home():
     return FileResponse("src/web/index.html")
+
+class OrderIn(BaseModel):
+    marketplace: str
+    external_id: str
+    buyer_name: str = ""
+    status: str = "pago"
+    total: float = 0
+    marketplace_fee: float = 0
+    shipping_cost: float = 0
+    product_cost: float = 0
+
+@app.get("/api/orders")
+def list_orders(db: Session = Depends(get_db)):
+    return db.query(models.Order).order_by(models.Order.id.desc()).all()
+
+@app.post("/api/orders")
+def create_order(o: OrderIn, db: Session = Depends(get_db)):
+    obj = models.Order(**o.model_dump())
+    obj.profit = o.total - o.marketplace_fee - o.shipping_cost - o.product_cost
+    db.add(obj); db.commit(); db.refresh(obj)
+    return obj

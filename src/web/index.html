@@ -24,8 +24,8 @@ th{background:#f9fafb}
 <main><h1>Painel</h1>
 <div class="cards">
 <div class="card">Produtos<b id="n">0</b></div>
-<div class="card">Pedidos<b>0</b></div>
-<div class="card">Lucro<b>R$ 0,00</b></div></div>
+<div class="card">Pedidos<b id="pn">0</b></div>
+<div class="card">Lucro<b id="pl">R$ 0,00</b></div></div>
 <h3 style="margin:16px 0">Produtos cadastrados</h3>
 <table><thead><tr><th>SKU</th><th>Título</th><th>Custo</th><th>Venda</th><th>Estoque</th></tr></thead>
 <tbody id="t"></tbody></table><h3 style="margin:24px 0 12px">Novo produto</h3>
@@ -46,6 +46,14 @@ const d=Object.fromEntries(new FormData(e.target));
 ['cost_price','sale_price'].forEach(k=>d[k]=parseFloat(d[k])||0);d.stock=parseInt(d.stock)||0;
 const r=await fetch('/api/products',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
 if(r.ok)location.reload();else alert((await r.json()).detail||'Erro')}
+</script>
+<h3 style="margin:24px 0 12px">Pedidos</h3>
+<table><thead><tr><th>Loja</th><th>Pedido</th><th>Cliente</th><th>Status</th><th>Total</th><th>Taxas</th><th>Frete</th><th>Custo</th><th>Lucro</th><th>Temu</th></tr></thead>
+<tbody id="o"></tbody></table>
+<script>
+fetch('/api/orders').then(r=>r.json()).then(l=>{
+const m=v=>'R$ '+v.toFixed(2);
+document.getElementById('pn').textContent=l.length;document.getElementById('pl').textContent=m(l.reduce((a,x)=>a+x.profit,0));document.getElementById('o').innerHTML=l.map(x=>`<tr><td>${x.marketplace}</td><td>${x.external_id}</td><td>${x.buyer_name||'-'}</td><td>${x.status}</td><td>${m(x.total)}</td><td>${m(x.marketplace_fee)}</td><td>${m(x.shipping_cost)}</td><td>${m(x.product_cost)}</td><td style="color:${x.profit>=0?'#059669':'#dc2626'}"><b>${m(x.profit)}</b></td><td>${x.temu_purchased?'Comprado':'Pendente'}</td></tr>`).join('')})
 </script>
 </main>
 <script>
