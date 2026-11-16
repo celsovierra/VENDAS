@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Produtos - GPScell Store</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <style>
+        body { font-family: sans-serif; margin: 20px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f4f4f4; }
+        .btn { padding: 8px 12px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; text-decoration: none;}
+    </style>
+</head>
+<body>
+    <a href="/" class="btn">Voltar ao Painel</a>
+    <h2>Lista de Produtos</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>SKU</th>
+                <th>Título</th>
+                <th>Custo (R$)</th>
+                <th>Venda (R$)</th>
+                <th>Estoque</th>
+            </tr>
+        </thead>
+        <tbody id="tabela-produtos">
+            <tr><td colspan="5">Carregando...</td></tr>
+        </tbody>
+    </table>
+
+    <script>
+        fetch('/api/products')
+            .then(r => r.json())
+            .then(data => {
+                const tbody = document.getElementById('tabela-produtos');
+                tbody.innerHTML = '';
+                if(data.length === 0) {
+                    tbody.innerHTML = '<tr><td colspan="5">Nenhum produto cadastrado.</td></tr>';
+                    return;
+                }
+                data.forEach(p => {
+                    tbody.innerHTML += `<tr>
+                        <td>${p.sku}</td>
+                        <td>${p.title}</td>
+                        <td>R$ ${p.cost.toFixed(2)}</td>
+                        <td>R$ ${p.price.toFixed(2)}</td>
+                        <td>${p.stock}</td>
+                    </tr>`;
+                });
+            });
+    </script>
+</body>
+</html>

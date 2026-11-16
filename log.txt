@@ -15,3 +15,23 @@ INFO:     45.176.253.211:0 - "GET /pedidos HTTP/1.1" 200 OK
 INFO:     45.176.253.211:0 - "GET /api/orders HTTP/1.1" 200 OK
 INFO:     45.176.253.211:0 - "GET /api/orders HTTP/1.1" 200 OK
 INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET / HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /static/style.css HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /static/layout.js?v=2 HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /api/orders HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     45.176.253.211:0 - "GET /pedidos HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /api/orders HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /api/ml/importar-vendas HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /pedidos HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /api/orders HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET / HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /static/layout.js?v=2 HTTP/1.1" 304 Not Modified
+INFO:     45.176.253.211:0 - "GET /api/orders HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "POST /api/products HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET / HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /static/layout.js?v=2 HTTP/1.1" 304 Not Modified
+INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /api/orders HTTP/1.1" 200 OK
