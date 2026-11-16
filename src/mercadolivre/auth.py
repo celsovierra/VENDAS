@@ -39,3 +39,30 @@ def teste(db: Session = Depends(get_db)):
     me = httpx.get("https://api.mercadolibre.com/users/me", headers=h, timeout=30).json()
     it = httpx.get(f"https://api.mercadolibre.com/users/{u}/items/search", headers=h, timeout=30).json()
     return {"nome": me.get("nickname"), "anuncios_total": it.get("paging", {}).get("total"), "ids": it.get("results", [])[:5]}
+from datetime import datetime
+def token(db):
+    if int(get(db, "ml_expires_at") or 0) < time.time() + 60:
+        r = httpx.post("https://api.mercadolibre.com/oauth/token", data={"grant_type": "refresh_token", "client_id": get(db, "ml_app_id"), "client_secret": get(db, "ml_secret"), "refresh_token": get(db, "ml_refresh_token")}, timeout=30)
+        d = r.json()
+        if r.status_code != 200: raise HTTPException(400, f"Refresh falhou: {d}")
+        put(db, "ml_access_token", d["access_token"]); put(db, "ml_refresh_token", d["refresh_token"]); put(db, "ml_expires_at", int(time.time()) + int(d["expires_in"])); db.commit()
+    return get(db, "ml_access_token")
+@router.get("/importar-vendas")
+def importar(db: Session = Depends(get_db)):
+    h = {"Authorization": f"Bearer {token(db)}"}
+    u, novos = get(db, "ml_user_id"), 0
+    for off in range(0, 200, 50):
+        d = httpx.get(f"https://api.mercadolibre.com/orders/search?seller={u}&sort=date_desc&limit=50&offset={off}", headers=h, timeout=30).json()
+        for o in d.get("results", []):
+            eid = str(o["id"])
+            if db.query(models.Order).filter_by(marketplace="mercadolivre", external_id=eid).first(): continue
+            fee = sum((i.get("sale_fee") or 0) * i["quantity"] for i in o["order_items"])
+            tot = o.get("total_amount") or 0
+            ped = models.Order(marketplace="mercadolivre", external_id=eid, buyer_name=(o.get("buyer") or {}).get("nickname"), status=o.get("status"), total=tot, marketplace_fee=fee, shipping_cost=0, product_cost=0, profit=tot - fee, created_at=datetime.fromisoformat(o["date_created"][:19]))
+            db.add(ped); db.flush()
+            for i in o["order_items"]:
+                db.add(models.OrderItem(order_id=ped.id, title=i["item"]["title"], quantity=i["quantity"], unit_price=i["unit_price"]))
+            novos += 1
+        if len(d.get("results", [])) < 50: break
+    db.commit()
+    return {"importados": novos}
