@@ -53,7 +53,7 @@ if(r.ok)location.reload();else alert((await r.json()).detail||'Erro')}
 <script>
 fetch('/api/orders').then(r=>r.json()).then(l=>{
 const m=v=>'R$ '+v.toFixed(2);
-document.getElementById('pn').textContent=l.length;document.getElementById('pl').textContent=m(l.reduce((a,x)=>a+x.profit,0));document.getElementById('o').innerHTML=l.map(x=>`<tr><td>${x.marketplace}</td><td>${x.external_id}</td><td>${x.buyer_name||'-'}</td><td>${x.status}</td><td>${m(x.total)}</td><td>${m(x.marketplace_fee)}</td><td>${m(x.shipping_cost)}</td><td>${m(x.product_cost)}</td><td style="color:${x.profit>=0?'#059669':'#dc2626'}"><b>${m(x.profit)}</b></td><td>${x.temu_purchased?'Comprado':'Pendente'}</td></tr>`).join('')})
+document.getElementById('pn').textContent=l.length;document.getElementById('pl').textContent=m(l.filter(x=>x.status!=='cancelled').reduce((a,x)=>a+x.profit,0));document.getElementById('o').innerHTML=l.map(x=>`<tr><td>${x.marketplace}</td><td>${x.external_id}</td><td>${x.buyer_name||'-'}</td><td>${x.status}</td><td>${m(x.total)}</td><td>${m(x.marketplace_fee)}</td><td>${m(x.shipping_cost)}</td><td>${m(x.product_cost)}</td><td style="color:${x.profit>=0?'#059669':'#dc2626'}"><b>${m(x.profit)}</b></td><td>${x.temu_purchased?'Comprado':'Pendente'}</td></tr>`).join('')})
 </script>
 </main>
 <script>
