@@ -47,7 +47,7 @@
                     }
                     data.forEach(p => {
                         // Se o SKU começa com MLB, significa que já está no Mercado Livre
-                        const noMl = p.sku.startsWith("MLB");
+                        const noMl = p.ml_id != null;
                         const btnAction = noMl 
                             ? `<span style="color:green; font-weight:bold;">✔ No ML</span>`
                             : `<button class="btn btn-pub" onclick="publicar(${p.id})">Publicar no ML</button>`;

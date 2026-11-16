@@ -4,6 +4,7 @@ from sqlalchemy.orm import relationship
 from .database import Base
 
 class Product(Base):
+    ml_id = Column(String, nullable=True)
     __tablename__ = "products"
     id = Column(Integer, primary_key=True)
     sku = Column(String, unique=True, index=True)
