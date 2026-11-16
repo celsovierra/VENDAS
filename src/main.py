@@ -113,6 +113,10 @@ def config_page():
     return FileResponse("src/web/config.html")
 
 @app.get("/pedidos", include_in_schema=False)
+@app.get("/produtos", include_in_schema=False)
+def produtos_page():
+    return FileResponse("src/web/produtos.html")
+
 def pedidos_page():
     return FileResponse("src/web/pedidos.html")
 
