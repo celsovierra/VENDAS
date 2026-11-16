@@ -1,19 +1,4 @@
-INFO:     Started server process [15562]
+INFO:     Started server process [16090]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:     45.176.253.211:0 - "GET / HTTP/1.1" 200 OK
-INFO:     45.176.253.211:0 - "GET /static/layout.js?v=4 HTTP/1.1" 200 OK
-INFO:     45.176.253.211:0 - "GET /api/orders HTTP/1.1" 200 OK
-INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
-INFO:     45.176.253.211:0 - "GET /pedidos HTTP/1.1" 200 OK
-INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
-INFO:     45.176.253.211:0 - "GET /pedidos HTTP/1.1" 200 OK
-INFO:     45.176.253.211:0 - "GET /static/style.css HTTP/1.1" 200 OK
-INFO:     45.176.253.211:0 - "GET /favicon.ico HTTP/1.1" 404 Not Found
-INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
-INFO:     45.176.253.211:0 - "GET / HTTP/1.1" 200 OK
-INFO:     45.176.253.211:0 - "GET /api/orders HTTP/1.1" 200 OK
-INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
-INFO:     45.176.253.211:0 - "GET /produtos HTTP/1.1" 200 OK
-INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
