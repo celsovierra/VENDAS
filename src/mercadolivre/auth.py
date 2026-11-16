@@ -31,3 +31,11 @@ def callback(code: str, db: Session = Depends(get_db)):
     put(db, "ml_expires_at", int(time.time()) + int(d["expires_in"]))
     db.commit()
     return HTMLResponse("<h3>Mercado Livre conectado ✓</h3><a href='/config'>Voltar</a>")
+@router.get("/teste")
+def teste(db: Session = Depends(get_db)):
+    t, u = get(db, "ml_access_token"), get(db, "ml_user_id")
+    if not t: raise HTTPException(400, "Conecte em /api/ml/login")
+    h = {"Authorization": f"Bearer {t}"}
+    me = httpx.get("https://api.mercadolibre.com/users/me", headers=h, timeout=30).json()
+    it = httpx.get(f"https://api.mercadolibre.com/users/{u}/items/search", headers=h, timeout=30).json()
+    return {"nome": me.get("nickname"), "anuncios_total": it.get("paging", {}).get("total"), "ids": it.get("results", [])[:5]}
