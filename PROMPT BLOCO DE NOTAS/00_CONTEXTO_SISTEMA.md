@@ -85,3 +85,6 @@ cd /workspaces/VENDAS && cat > "PROMPT BLOCO DE NOTAS/00_CONTEXTO_SISTEMA.md" <<
 Colar este arquivo na primeira mensagem e dizer: "Continue de onde parei".
 EOF
 cat "PROMPT BLOCO DE NOTAS/00_CONTEXTO_SISTEMA.md" | head -5 && git add -A && git commit -m "Atualiza contexto" && git push
+
+
+senha secreta mercado livre    UcHvHCCKzC7qyWx3WjiBZeQkx38NlQJZ
