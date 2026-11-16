@@ -8,3 +8,16 @@ INFO:     45.176.253.211:0 - "GET /produtos HTTP/1.1" 200 OK
 INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
 INFO:     127.0.0.1:54494 - "GET /api/ml/importar-produtos HTTP/1.1" 200 OK
 INFO:     127.0.0.1:33402 - "GET /api/ml/importar-produtos HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /produtos HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET / HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /api/orders HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /static/layout.js?v=3 HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /pedidos HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /produtos HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET / HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /api/orders HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
