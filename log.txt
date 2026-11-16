@@ -11,3 +11,7 @@ INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
 INFO:     45.176.253.211:0 - "GET /api/orders HTTP/1.1" 200 OK
 INFO:     45.176.253.211:0 - "GET /api/orders HTTP/1.1" 200 OK
 INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /pedidos HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /api/orders HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /api/orders HTTP/1.1" 200 OK
+INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
