@@ -47,7 +47,7 @@ const d=Object.fromEntries(new FormData(e.target));
 const r=await fetch('/api/products',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(d)});
 if(r.ok)location.reload();else alert((await r.json()).detail||'Erro')}
 </script>
-<h3 style="margin:24px 0 12px">Pedidos</h3>
+<h3 style="margin:24px 0 12px">Pedidos <button onclick="this.textContent='Atualizando...';fetch('/api/ml/importar-vendas').then(r=>r.json()).then(d=>{alert('Novos: '+d.importados);location.reload()})" style="margin-left:12px;padding:6px 12px;border:0;border-radius:6px;background:#2563eb;color:#fff;cursor:pointer">Atualizar vendas</button></h3>
 <table><thead><tr><th>Loja</th><th>Pedido</th><th>Cliente</th><th>Status</th><th>Total</th><th>Taxas</th><th>Frete</th><th>Custo</th><th>Lucro</th><th>Temu</th></tr></thead>
 <tbody id="o"></tbody></table>
 <script>
