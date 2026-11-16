@@ -112,5 +112,9 @@ def save_setting(s: SettingIn, db: Session = Depends(get_db)):
 def config_page():
     return FileResponse("src/web/config.html")
 
+@app.get("/pedidos", include_in_schema=False)
+def pedidos_page():
+    return FileResponse("src/web/pedidos.html")
+
 from fastapi.staticfiles import StaticFiles
 app.mount("/static", StaticFiles(directory="src/web"), name="static")

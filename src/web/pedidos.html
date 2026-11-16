@@ -1,0 +1,13 @@
+<!DOCTYPE html><html lang="pt-br"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Pedidos</title>
+<style>body{font-family:Arial,sans-serif;background:#f1f5f9;margin:0;padding:24px;color:#0f172a}a{color:#2563eb;text-decoration:none}.top{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:16px}select,button{padding:8px 12px;border-radius:6px;border:1px solid #cbd5e1}button{background:#2563eb;color:#fff;border:0;cursor:pointer}.box{background:#fff;border-radius:10px;overflow-x:auto}table{width:100%;border-collapse:collapse}th,td{padding:10px;text-align:left;border-bottom:1px solid #e2e8f0;white-space:nowrap}th{background:#eff6ff}</style></head><body>
+<div class="top"><a href="/">← Painel</a><h2 style="margin:0">Pedidos</h2>
+<select id="f" onchange="r()"><option value="">Todos</option><option value="paid">Pagos</option><option value="pago">Pago (manual)</option><option value="pending">Pendentes</option><option value="cancelled">Cancelados</option></select>
+<button onclick="this.textContent='Atualizando...';fetch('/api/ml/importar-vendas').then(x=>x.json()).then(d=>{alert('Novos: '+d.importados);location.reload()})">Atualizar vendas</button>
+<b id="n"></b></div>
+<div class="box"><table><thead><tr><th>Loja</th><th>Pedido</th><th>Cliente</th><th>Status</th><th>Total</th><th>Taxas</th><th>Frete</th><th>Custo</th><th>Lucro</th><th>Data</th></tr></thead><tbody id="t"></tbody></table></div>
+<script>
+const m=v=>'R$ '+Number(v||0).toFixed(2).replace('.',',');let L=[];
+function r(){const s=document.getElementById('f').value;const l=s?L.filter(x=>x.status===s):L;document.getElementById('n').textContent=l.length+' pedido(s)';
+document.getElementById('t').innerHTML=l.map(x=>`<tr><td>${x.marketplace}</td><td>${x.external_id}</td><td>${x.buyer_name||'-'}</td><td>${x.status}</td><td>${m(x.total)}</td><td>${m(x.marketplace_fee)}</td><td>${m(x.shipping_cost)}</td><td>${m(x.product_cost)}</td><td><b>${m(x.profit)}</b></td><td>${(x.created_at||'').slice(0,10)}</td></tr>`).join('')}
+fetch('/api/orders').then(x=>x.json()).then(d=>{L=d;r()})
+</script></body></html>
