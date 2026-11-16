@@ -122,3 +122,9 @@ def pedidos_page():
 
 from fastapi.staticfiles import StaticFiles
 app.mount("/static", StaticFiles(directory="src/web"), name="static")
+
+
+@app.get("/api/ml/importar-produtos")
+def importar_produtos_ml(db: Session = Depends(get_db)):
+    from src.mercadolivre.importar_produtos import importar_ml
+    return importar_ml(db)

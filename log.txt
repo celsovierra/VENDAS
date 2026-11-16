@@ -1,20 +1,11 @@
-INFO:     Started server process [5258]
+INFO:     Started server process [6917]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:     127.0.0.1:52716 - "GET /produtos HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45990 - "GET /api/ml/importar-produtos HTTP/1.1" 200 OK
 INFO:     45.176.253.211:0 - "GET / HTTP/1.1" 200 OK
 INFO:     45.176.253.211:0 - "GET /api/orders HTTP/1.1" 200 OK
-INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
 INFO:     45.176.253.211:0 - "GET /static/layout.js?v=2 HTTP/1.1" 304 Not Modified
-INFO:     45.176.253.211:0 - "GET /produtos HTTP/1.1" 200 OK
-INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
-INFO:     45.176.253.211:0 - "GET /static/layout.js?v=2 HTTP/1.1" 304 Not Modified
-INFO:     45.176.253.211:0 - "GET /api/orders HTTP/1.1" 200 OK
-INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
-INFO:     127.0.0.1:45456 - "GET /api/products HTTP/1.1" 200 OK
-INFO:     45.176.253.211:0 - "GET /produtos HTTP/1.1" 200 OK
 INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
 INFO:     45.176.253.211:0 - "GET /produtos HTTP/1.1" 200 OK
 INFO:     45.176.253.211:0 - "GET /api/products HTTP/1.1" 200 OK
-INFO:     127.0.0.1:41806 - "GET /api/products HTTP/1.1" 200 OK
