@@ -66,3 +66,10 @@ def importar(db: Session = Depends(get_db)):
         if len(d.get("results", [])) < 50: break
     db.commit()
     return {"importados": novos}
+@router.get("/diag-vendas")
+def diag(db: Session = Depends(get_db)):
+    h = {"Authorization": f"Bearer {token(db)}"}
+    u = get(db, "ml_user_id")
+    r = httpx.get(f"https://api.mercadolibre.com/orders/search?seller={u}&limit=1", headers=h, timeout=30)
+    d = r.json()
+    return {"status": r.status_code, "total": d.get("paging", {}).get("total"), "erro": d.get("message") or d.get("error")}
