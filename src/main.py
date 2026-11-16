@@ -4,6 +4,8 @@ from src.core import models
 
 Base.metadata.create_all(engine)
 app = FastAPI(title="Gestão de Vendas")
+from src.mercadolivre.auth import router as ml_router
+app.include_router(ml_router)
 
 @app.get("/api/health")
 def health():
@@ -96,7 +98,7 @@ class SettingIn(BaseModel):
 @app.get("/api/settings")
 def get_settings(db: Session = Depends(get_db)):
     rows = db.query(models.Setting).all()
-    return {r.key: ("***" if "secret" in r.key.lower() else r.value) for r in rows}
+    return {r.key: ("***" if ("secret" in r.key.lower() or "token" in r.key.lower()) else r.value) for r in rows}
 
 @app.post("/api/settings")
 def save_setting(s: SettingIn, db: Session = Depends(get_db)):
