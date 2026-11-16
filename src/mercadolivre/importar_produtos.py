@@ -36,13 +36,14 @@ def importar_ml(db: Session):
             
             existe = db.query(Product).filter(Product.sku == sku).first()
             if not existe:
-                novo = Product(sku=sku, title=title, sale_price=price, cost_price=0.0, stock=stock)
+                novo = Product(sku=sku, title=title, sale_price=price, cost_price=0.0, stock=stock, ml_id=item_id)
                 db.add(novo)
                 salvos += 1
             else:
                 existe.title = title
                 existe.sale_price = price
                 existe.stock = stock
+                existe.ml_id = item_id
                 salvos += 1
                 
     db.commit()
