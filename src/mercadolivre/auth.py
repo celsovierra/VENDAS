@@ -93,7 +93,7 @@ def publicar(pid: int, db: Session = Depends(get_db), validar: bool = True):
             return {"msg": "Nao achei categoria para este titulo."}
         cat = d[0]["category_id"]
     body = {
-        "title": p.title[:60], "category_id": cat, "price": p.sale_price,
+        "family_name": p.title[:60], "category_id": cat, "price": p.sale_price,
         "currency_id": "BRL", "available_quantity": p.stock or 1,
         "buying_mode": "buy_it_now", "condition": "new",
         "listing_type_id": "gold_special",
