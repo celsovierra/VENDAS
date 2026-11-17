@@ -19,6 +19,7 @@
     <a href="/" class="btn">Voltar ao Painel</a>
     <h2>Lista de Produtos</h2>
 <button class="btn" style="margin-left:8px" onclick="document.getElementById('nf').style.display='block'">+ Novo produto</button>
+<button class="btn" style="margin-left:8px;background:#198754" onclick="importarLink()">Importar de link</button>
 <div id="nf" style="display:none;background:#fff;padding:16px;margin-top:16px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.1)">
 <h3 style="margin-top:0">Novo produto</h3>
 <style>#nf input,#nf textarea{width:100%;padding:8px;margin:4px 0 10px;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:5px}</style>
@@ -87,6 +88,19 @@ Imagens (um link por linha)<textarea id="f_img" rows="3"></textarea>
                     alert(res.msg);
                     carregarProdutos(); // Recarrega a lista
                 });
+        }
+
+        function importarLink() {
+            const u=prompt('Cole o link do produto:'); if(!u) return;
+            fetch('/api/importar-link?url='+encodeURIComponent(u)).then(r=>r.json().then(d=>({ok:r.ok,d}))).then(x=>{
+                if(!x.ok){alert(x.d.detail||'Erro ao importar');return;}
+                document.getElementById('nf').style.display='block';
+                document.getElementById('f_title').value=(x.d.title||'').slice(0,60);
+                document.getElementById('f_desc').value=x.d.description||'';
+                document.getElementById('f_img').value=(x.d.images||[]).join('\n');
+                document.getElementById('f_price').value=x.d.price||'';
+                if(!x.d.title) alert('A loja nao devolveu dados (bloqueio). Preencha manualmente.');
+            });
         }
 
         function salvarNovo() {
