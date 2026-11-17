@@ -103,9 +103,9 @@ def publicar(pid: int, db: Session = Depends(get_db), validar: bool = True):
     }
     url = "https://api.mercadolibre.com/items/validate" if validar else "https://api.mercadolibre.com/items"
     r = httpx.post(url, json=body, headers=h, timeout=60)
-    if r.status_code in (200, 201):
+    if r.status_code in (200, 201, 204):
         if validar:
             return {"msg": "TESTE OK: categoria " + cat + ". O ML aceitou os dados (nada foi publicado)."}
         p.ml_id = r.json().get("id"); p.ml_category = cat; db.commit()
         return {"msg": "Publicado! ID: " + str(p.ml_id)}
-    return {"msg": "ML recusou (" + str(r.status_code) + "): " + r.text[:400]}
+    return {"msg": "ML recusou (" + str(r.status_code) + "): " + r.text[:2500]}
