@@ -17,6 +17,8 @@ class Product(Base):
     temu_supplier = Column(String)
     images = Column(Text)
     ml_category = Column(String)
+    brand = Column(String)
+    model = Column(String)
     created_at = Column(DateTime, default=datetime.utcnow)
 
 class Listing(Base):
