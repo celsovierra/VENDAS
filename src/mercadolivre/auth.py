@@ -97,6 +97,7 @@ def publicar(pid: int, db: Session = Depends(get_db), validar: bool = True):
         "currency_id": "BRL", "available_quantity": p.stock or 1,
         "buying_mode": "buy_it_now", "condition": "new",
         "listing_type_id": "gold_special",
+        "shipping": {"mode": "me2", "free_shipping": True},
         "pictures": [{"source": u} for u in imgs],
         "attributes": [{"id": "BRAND", "value_name": "Genérica"}, {"id": "MODEL", "value_name": "E88"}],
     }
