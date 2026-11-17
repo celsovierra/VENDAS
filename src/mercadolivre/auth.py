@@ -123,3 +123,16 @@ def categorias(q: str, db: Session = Depends(get_db)):
     r = httpx.get("https://api.mercadolibre.com/sites/MLB/domain_discovery/search", params={"q": q, "limit": 5}, headers=h, timeout=30)
     d = r.json() if r.status_code == 200 else []
     return [{"id": x["category_id"], "nome": x.get("category_name", "")} for x in d]
+
+
+@router.get("/frete")
+def frete(l: float, w: float, h: float, peso: float, preco: float, cat: str = "", db: Session = Depends(get_db)):
+    hd = {"Authorization": "Bearer " + token(db)}
+    me = httpx.get("https://api.mercadolibre.com/users/me", headers=hd, timeout=30).json()
+    prm = {"dimensions": "%dx%dx%d,%d" % (l, w, h, peso), "item_price": preco, "listing_type_id": "gold_special", "mode": "me2", "condition": "new"}
+    if cat:
+        prm["category_id"] = cat
+    r = httpx.get("https://api.mercadolibre.com/users/" + str(me["id"]) + "/shipping_options/free", params=prm, headers=hd, timeout=30)
+    if r.status_code != 200:
+        raise HTTPException(400, "ML recusou: " + r.text[:200])
+    return {"frete": r.json()["coverage"]["all_country"]["list_cost"]}
