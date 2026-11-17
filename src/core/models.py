@@ -15,6 +15,8 @@ class Product(Base):
     stock = Column(Integer, default=0)
     temu_url = Column(String)
     temu_supplier = Column(String)
+    images = Column(Text)
+    ml_category = Column(String)
     created_at = Column(DateTime, default=datetime.utcnow)
 
 class Listing(Base):
