@@ -73,3 +73,37 @@ def diag(db: Session = Depends(get_db)):
     r = httpx.get(f"https://api.mercadolibre.com/orders/search?seller={u}&limit=1", headers=h, timeout=30)
     d = r.json()
     return {"status": r.status_code, "total": d.get("paging", {}).get("total"), "erro": d.get("message") or d.get("error")}
+
+
+@router.post("/publicar/{pid}")
+def publicar(pid: int, db: Session = Depends(get_db), validar: bool = True):
+    p = db.get(models.Product, pid)
+    if not p:
+        raise HTTPException(404, "Produto nao encontrado")
+    imgs = [x.strip() for x in (p.images or "").split(",") if x.strip()]
+    if not imgs:
+        return {"msg": "Falta imagem: cole ao menos 1 link de imagem no produto."}
+    t = token(db)
+    h = {"Authorization": "Bearer " + t}
+    cat = p.ml_category
+    if not cat:
+        r = httpx.get("https://api.mercadolibre.com/sites/MLB/domain_discovery/search", params={"q": p.title, "limit": 1}, headers=h, timeout=30)
+        d = r.json() if r.status_code == 200 else []
+        if not d:
+            return {"msg": "Nao achei categoria para este titulo."}
+        cat = d[0]["category_id"]
+    body = {
+        "title": p.title[:60], "category_id": cat, "price": p.sale_price,
+        "currency_id": "BRL", "available_quantity": p.stock or 1,
+        "buying_mode": "buy_it_now", "condition": "new",
+        "listing_type_id": "gold_special",
+        "pictures": [{"source": u} for u in imgs],
+    }
+    url = "https://api.mercadolibre.com/items/validate" if validar else "https://api.mercadolibre.com/items"
+    r = httpx.post(url, json=body, headers=h, timeout=60)
+    if r.status_code in (200, 201):
+        if validar:
+            return {"msg": "TESTE OK: categoria " + cat + ". O ML aceitou os dados (nada foi publicado)."}
+        p.ml_id = r.json().get("id"); p.ml_category = cat; db.commit()
+        return {"msg": "Publicado! ID: " + str(p.ml_id)}
+    return {"msg": "ML recusou (" + str(r.status_code) + "): " + r.text[:400]}
