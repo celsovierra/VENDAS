@@ -98,6 +98,7 @@ def publicar(pid: int, db: Session = Depends(get_db), validar: bool = True):
         "buying_mode": "buy_it_now", "condition": "new",
         "listing_type_id": "gold_special",
         "pictures": [{"source": u} for u in imgs],
+        "attributes": [{"id": "BRAND", "value_name": "Genérica"}, {"id": "MODEL", "value_name": "E88"}],
     }
     url = "https://api.mercadolibre.com/items/validate" if validar else "https://api.mercadolibre.com/items"
     r = httpx.post(url, json=body, headers=h, timeout=60)
