@@ -29,6 +29,7 @@ Descrição<textarea id="f_desc" rows="5"></textarea>
 Custo (R$)<input id="f_cost" type="number" step="0.01">
 Preço de venda (R$)<input id="f_price" type="number" step="0.01">
 Estoque<input id="f_stock" type="number">
+Link do fornecedor (Temu)<input id="f_temu">
 Imagens (um link por linha)<textarea id="f_img" rows="3"></textarea>
 <button class="btn" onclick="salvarNovo()">Salvar produto</button>
 <button class="btn" style="background:#6c757d" onclick="document.getElementById('nf').style.display='none'">Cancelar</button>
@@ -74,7 +75,7 @@ Imagens (um link por linha)<textarea id="f_img" rows="3"></textarea>
                             <td>R$ ${(p.cost_price || 0).toFixed(2)}</td>
                             <td>R$ ${(p.sale_price || 0).toFixed(2)}</td>
                             <td>${p.stock || 0}</td>
-                            <td>${btnAction}</td>
+                            <td>${btnAction} ${p.temu_url?`<a class="btn" style="background:#fd7e14" target="_blank" href="${p.temu_url}">Comprar</a>`:''}</td>
                         </tr>`;
                     });
                 });
@@ -95,6 +96,7 @@ Imagens (um link por linha)<textarea id="f_img" rows="3"></textarea>
             fetch('/api/importar-link?url='+encodeURIComponent(u)).then(r=>r.json().then(d=>({ok:r.ok,d}))).then(x=>{
                 if(!x.ok){alert(x.d.detail||'Erro ao importar');return;}
                 document.getElementById('nf').style.display='block';
+                document.getElementById('f_temu').value=u;
                 document.getElementById('f_title').value=(x.d.title||'').slice(0,60);
                 document.getElementById('f_desc').value=x.d.description||'';
                 document.getElementById('f_img').value=(x.d.images||[]).join('\n');
@@ -107,7 +109,7 @@ Imagens (um link por linha)<textarea id="f_img" rows="3"></textarea>
             const v=id=>document.getElementById(id).value;
             const body={sku:v('f_sku'),title:v('f_title'),description:v('f_desc'),
                 cost_price:parseFloat(v('f_cost'))||0,sale_price:parseFloat(v('f_price'))||0,
-                stock:parseInt(v('f_stock'))||0,images:v('f_img').split('\n').map(x=>x.trim()).filter(x=>x).join(',')};
+                stock:parseInt(v('f_stock'))||0,temu_url:v('f_temu'),images:v('f_img').split('\n').map(x=>x.trim()).filter(x=>x).join(',')};
             if(!body.sku||!body.title){alert('Preencha SKU e Título');return;}
             fetch('/api/products',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
             .then(r=>r.json().then(d=>({ok:r.ok,d})))
