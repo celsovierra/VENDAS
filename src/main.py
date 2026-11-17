@@ -29,6 +29,11 @@ class ProductIn(BaseModel):
     ml_category: str = ""
     brand: str = ""
     model: str = ""
+    weight: float = 0
+    length: float = 0
+    width: float = 0
+    height: float = 0
+    shipping_cost: float = 0
 
 @app.get("/api/products")
 def list_products(db: Session = Depends(get_db)):
@@ -60,6 +65,11 @@ class ProductIn(BaseModel):
     ml_category: str = ""
     brand: str = ""
     model: str = ""
+    weight: float = 0
+    length: float = 0
+    width: float = 0
+    height: float = 0
+    shipping_cost: float = 0
 
 @app.get("/api/products")
 def list_products(db: Session = Depends(get_db)):

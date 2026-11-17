@@ -19,6 +19,11 @@ class Product(Base):
     ml_category = Column(String)
     brand = Column(String)
     model = Column(String)
+    weight = Column(Float)
+    length = Column(Float)
+    width = Column(Float)
+    height = Column(Float)
+    shipping_cost = Column(Float)
     created_at = Column(DateTime, default=datetime.utcnow)
 
 class Listing(Base):
