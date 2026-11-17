@@ -108,4 +108,10 @@ def publicar(pid: int, db: Session = Depends(get_db), validar: bool = True):
             return {"msg": "TESTE OK: categoria " + cat + ". O ML aceitou os dados (nada foi publicado)."}
         p.ml_id = r.json().get("id"); p.ml_category = cat; db.commit()
         return {"msg": "Publicado! ID: " + str(p.ml_id)}
+    try:
+        cs = r.json().get("cause", [])
+    except Exception:
+        cs = []
+    if validar and cs and all(c.get("type") == "warning" for c in cs):
+        return {"msg": "TESTE OK com avisos: " + " | ".join(c.get("message", "") for c in cs) + ". Nada foi publicado."}
     return {"msg": "ML recusou (" + str(r.status_code) + "): " + r.text[:2500]}
