@@ -22,13 +22,16 @@
 <button class="btn" style="margin-left:8px;background:#198754" onclick="importarLink()">Importar de link</button>
 <div id="nf" style="display:none;background:#fff;padding:16px;margin-top:16px;border-radius:8px;box-shadow:0 1px 3px rgba(0,0,0,.1)">
 <h3 style="margin-top:0">Novo produto</h3>
-<style>#nf input,#nf textarea{width:100%;padding:8px;margin:4px 0 10px;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:5px}</style>
+<style>#nf input,#nf textarea,#nf select{width:100%;padding:8px;margin:4px 0 10px;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:5px}</style>
 SKU<input id="f_sku">
 Título<input id="f_title" maxlength="60">
 Descrição<textarea id="f_desc" rows="5"></textarea>
 Custo (R$)<input id="f_cost" type="number" step="0.01">
 Preço de venda (R$)<input id="f_price" type="number" step="0.01">
 Estoque<input id="f_stock" type="number">
+Categoria do ML <button class="btn" type="button" onclick="sugerirCat()">Sugerir pelo título</button><select id="f_cat"><option value="">(escolha)</option></select>
+Marca<input id="f_brand">
+Modelo<input id="f_model">
 Link do fornecedor (Temu)<input id="f_temu">
 Imagens (um link por linha)<textarea id="f_img" rows="3"></textarea>
 <button class="btn" onclick="salvarNovo()">Salvar produto</button>
@@ -105,11 +108,19 @@ Imagens (um link por linha)<textarea id="f_img" rows="3"></textarea>
             });
         }
 
+        function sugerirCat() {
+            const t=document.getElementById('f_title').value; if(!t){alert('Preencha o título primeiro');return;}
+            fetch('/api/ml/categorias?q='+encodeURIComponent(t)).then(r=>r.json()).then(d=>{
+                const s=document.getElementById('f_cat');
+                s.innerHTML=d.map(c=>`<option value="${c.id}">${c.nome} (${c.id})</option>`).join('')||'<option value="">Nenhuma sugestão</option>';
+            });
+        }
+
         function salvarNovo() {
             const v=id=>document.getElementById(id).value;
             const body={sku:v('f_sku'),title:v('f_title'),description:v('f_desc'),
                 cost_price:parseFloat(v('f_cost'))||0,sale_price:parseFloat(v('f_price'))||0,
-                stock:parseInt(v('f_stock'))||0,temu_url:v('f_temu'),images:v('f_img').split('\n').map(x=>x.trim()).filter(x=>x).join(',')};
+                stock:parseInt(v('f_stock'))||0,temu_url:v('f_temu'),ml_category:v('f_cat'),brand:v('f_brand'),model:v('f_model'),images:v('f_img').split('\n').map(x=>x.trim()).filter(x=>x).join(',')};
             if(!body.sku||!body.title){alert('Preencha SKU e Título');return;}
             fetch('/api/products',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
             .then(r=>r.json().then(d=>({ok:r.ok,d})))

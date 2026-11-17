@@ -115,3 +115,11 @@ def publicar(pid: int, db: Session = Depends(get_db), validar: bool = True):
     if validar and cs and all(c.get("type") == "warning" for c in cs):
         return {"msg": "TESTE OK com avisos: " + " | ".join(c.get("message", "") for c in cs) + ". Nada foi publicado."}
     return {"msg": "ML recusou (" + str(r.status_code) + "): " + r.text[:2500]}
+
+
+@router.get("/categorias")
+def categorias(q: str, db: Session = Depends(get_db)):
+    h = {"Authorization": "Bearer " + token(db)}
+    r = httpx.get("https://api.mercadolibre.com/sites/MLB/domain_discovery/search", params={"q": q, "limit": 5}, headers=h, timeout=30)
+    d = r.json() if r.status_code == 200 else []
+    return [{"id": x["category_id"], "nome": x.get("category_name", "")} for x in d]
