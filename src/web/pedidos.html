@@ -8,6 +8,6 @@
 <script>
 const m=v=>'R$ '+Number(v||0).toFixed(2).replace('.',',');let L=[];
 function r(){const s=document.getElementById('f').value;const l=s?L.filter(x=>x.status===s):L;document.getElementById('n').textContent=l.length+' pedido(s)';
-document.getElementById('t').innerHTML=l.map(x=>`<tr><td>${x.marketplace}</td><td>${x.external_id}</td><td>${x.buyer_name||'-'}</td><td>${x.status}</td><td>${m(x.total)}</td><td>${m(x.marketplace_fee)}</td><td>${m(x.shipping_cost)}</td><td>${m(x.product_cost)}</td><td><b>${m(x.profit)}</b></td><td>${(x.created_at||'').slice(0,10)}</td></tr>`).join('')}
+document.getElementById('t').innerHTML=l.map(x=>`<tr><td>${x.marketplace}</td><td>${x.external_id}</td><td>${x.buyer_name||'-'}</td><td>${x.status}</td><td>${m(x.total)}</td><td>${m(x.marketplace_fee)}</td><td>${m(x.shipping_cost)}</td><td>${m(x.product_cost)}</td><td><b>${m(x.status==="cancelled"?0:x.profit)}</b></td><td>${(x.created_at||'').slice(0,10)}</td></tr>`).join('')}
 fetch('/api/orders').then(x=>x.json()).then(d=>{L=d;r()})
 </script></body></html>
