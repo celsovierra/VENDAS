@@ -25,6 +25,8 @@ class ProductIn(BaseModel):
     stock: int = 0
     temu_url: str = ""
     temu_supplier: str = ""
+    images: str = ""
+    ml_category: str = ""
 
 @app.get("/api/products")
 def list_products(db: Session = Depends(get_db)):
@@ -52,6 +54,8 @@ class ProductIn(BaseModel):
     stock: int = 0
     temu_url: str = ""
     temu_supplier: str = ""
+    images: str = ""
+    ml_category: str = ""
 
 @app.get("/api/products")
 def list_products(db: Session = Depends(get_db)):
