@@ -85,8 +85,8 @@ Imagens (um link por linha)<textarea id="f_img" rows="3"></textarea>
                         const noMl = p.ml_id != null;
                         const btnAction = noMl 
                             ? `<span title="Já publicado no Mercado Livre" style="border:0;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:#ffe600;color:#15803d;height:34px;padding:0 8px;cursor:default">ML ✔</span>`
-                            : `<button title="Publicar no Mercado Livre" style="border:0;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:#ffe600;color:#2d3277;width:38px;height:34px" onclick="publicar(${p.id})">ML</button>`;
-                        const btnShopee = `<button title="Publicar na Shopee" style="border:0;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:#ee4d2d;color:#fff;width:34px;height:34px" onclick="publicarShopee(${p.id})">S</button>`;
+                            : `<button title="Publicar no Mercado Livre" style="border:0;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:#ffe600 !important;color:#2d3277 !important;width:38px;height:34px" onclick="publicar(${p.id})">ML</button>`;
+                        const btnShopee = `<button title="Publicar na Shopee" style="border:0;border-radius:8px;font-weight:700;font-size:13px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;background:#ee4d2d !important;color:#fff !important;width:34px;height:34px" onclick="publicarShopee(${p.id})">S</button>`;
 
                         tbody.innerHTML += `<tr>
                             <td>${p.sku || ''}</td>
