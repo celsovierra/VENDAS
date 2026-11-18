@@ -60,4 +60,4 @@ document.getElementById('pn').textContent=l.length;document.getElementById('pl')
 fetch('/api/products').then(r=>r.json()).then(l=>{
 document.getElementById('n').textContent=l.length;
 document.getElementById('t').innerHTML=l.map(p=>`<tr><td>${p.sku}</td><td>${p.title}</td><td>R$ ${p.cost_price.toFixed(2)}</td><td>R$ ${p.sale_price.toFixed(2)}</td><td>${p.stock}</td></tr>`).join('')})
-</script><script src="/static/layout.js?v=13"></script></body></html>
+</script><script src="/static/layout.js?v=15"></script></body></html>
