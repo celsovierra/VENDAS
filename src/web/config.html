@@ -22,7 +22,12 @@ small{color:#6b7280}
 <label>App ID<input id="ml_app_id"></label>
 <label>Secret<input id="ml_secret" type="password" placeholder="Cole a nova Secret"></label>
 <small id="st"></small>
-<button onclick="salvar()">Salvar</button></div></main>
+<button onclick="salvar()">Salvar</button></div><div class="box"><h3>Shopee</h3>
+<label>Partner ID<input id="shopee_partner_id"></label>
+<label>Partner Key<input id="shopee_partner_key" type="password" placeholder="Cole a Partner Key"></label>
+<label>Shop ID<input id="shopee_shop_id"></label>
+<small id="st2"></small>
+<button onclick="salvarShopee()">Salvar Shopee</button></div></main>
 <script>
 const post=(k,v)=>fetch('/api/settings',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({key:k,value:v})});
 fetch('/api/settings').then(r=>r.json()).then(s=>{
@@ -32,4 +37,12 @@ async function salvar(){
 const a=document.getElementById('ml_app_id').value.trim(),s=document.getElementById('ml_secret').value.trim();
 if(a)await post('ml_app_id',a);if(s)await post('ml_secret',s);
 document.getElementById('ml_secret').value='';location.reload()}
-</script><script src="/static/layout.js?v=8"></script></body></html>
+fetch('/api/settings').then(r=>r.json()).then(s=>{
+document.getElementById('shopee_partner_id').value=s.shopee_partner_id||'';
+document.getElementById('shopee_shop_id').value=s.shopee_shop_id||'';
+document.getElementById('st2').textContent=s.shopee_partner_key?'Partner Key: salva ✓':'Partner Key: não informada'});
+async function salvarShopee(){
+const a=document.getElementById('shopee_partner_id').value.trim(),k=document.getElementById('shopee_partner_key').value.trim(),h=document.getElementById('shopee_shop_id').value.trim();
+if(a)await post('shopee_partner_id',a);if(k)await post('shopee_partner_key',k);if(h)await post('shopee_shop_id',h);
+document.getElementById('shopee_partner_key').value='';location.reload()}
+</script><script src="/static/layout.js?v=9"></script></body></html>
