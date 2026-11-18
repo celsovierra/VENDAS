@@ -13,7 +13,13 @@
         .btn:hover { background: #0b5ed7; }
         .btn-pub { background: #ffc107; color: #000; font-weight: bold; }
         .btn-pub:hover { background: #ffca2c; }
-    </style>
+    .acoes{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.ic{border:0;border-radius:8px;padding:7px 11px;font-weight:700;font-size:13px;cursor:pointer;text-decoration:none;color:#fff;display:inline-block}
+.ic.ml{background:#ffe600;color:#2d3277}
+.ic.ml.ok{background:#dcfce7;color:#15803d;cursor:default}
+.ic.sp{background:#ee4d2d}
+.ic.buy{background:#fd7e14}
+</style>
 </head>
 <body>
     <a href="/" class="btn">Voltar ao Painel</a>
@@ -74,9 +80,9 @@ Imagens (um link por linha)<textarea id="f_img" rows="3"></textarea>
                         // Se o SKU começa com MLB, significa que já está no Mercado Livre
                         const noMl = p.ml_id != null;
                         const btnAction = noMl 
-                            ? `<span style="color:green; font-weight:bold;">✔ No ML</span>`
-                            : `<button class="btn btn-pub" onclick="publicar(${p.id})">Publicar no ML</button>`;
-                        const btnShopee = `<button class="btn btn-pub" style="background:#ee4d2d;color:#fff" onclick="publicarShopee(${p.id})">Publicar na Shopee</button>`;
+                            ? `<span class="ic ml ok" title="Já publicado no Mercado Livre">ML ✔</span>`
+                            : `<button class="ic ml" title="Publicar no Mercado Livre" onclick="publicar(${p.id})">ML</button>`;
+                        const btnShopee = `<button class="ic sp" title="Publicar na Shopee" onclick="publicarShopee(${p.id})">S</button>`;
 
                         tbody.innerHTML += `<tr>
                             <td>${p.sku || ''}</td>
@@ -84,7 +90,7 @@ Imagens (um link por linha)<textarea id="f_img" rows="3"></textarea>
                             <td>R$ ${(p.cost_price || 0).toFixed(2)}</td>
                             <td>R$ ${(p.sale_price || 0).toFixed(2)}</td>
                             <td>${p.stock || 0}</td>
-                            <td>${btnAction} ${btnShopee} ${p.temu_url?`<a class="btn" style="background:#fd7e14" target="_blank" href="${p.temu_url}">Comprar</a>`:''}</td>
+                            <td><div class="acoes">${btnAction}${btnShopee}${p.temu_url?`<a class="ic buy" title="Comprar no fornecedor" target="_blank" href="${p.temu_url}">Comprar</a>`:''}</div></td>
                         </tr>`;
                     });
                 });
