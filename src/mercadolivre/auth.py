@@ -136,3 +136,10 @@ def frete(l: float, w: float, h: float, peso: float, preco: float, cat: str = ""
     if r.status_code != 200:
         raise HTTPException(400, "ML recusou: " + r.text[:200])
     return {"frete": r.json()["coverage"]["all_country"]["list_cost"]}
+
+@router.get("/diag-envio")
+def diag_envio(db: Session = Depends(get_db)):
+    t, u = token(db), get(db, "ml_user_id")
+    h = {"Authorization": f"Bearer {t}"}
+    r = httpx.get(f"https://api.mercadolibre.com/users/{u}/shipping_preferences", headers=h, timeout=30)
+    return {"status": r.status_code, "dados": r.json()}
