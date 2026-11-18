@@ -19,6 +19,10 @@
 .ic.ml.ok{background:#dcfce7;color:#15803d;cursor:default}
 .ic.sp{background:#ee4d2d}
 .ic.buy{background:#fd7e14}
+.ic.ml,.ic.sp{width:34px;height:34px;padding:0;border-radius:8px}
+.ic.ml{background:#ffe600}
+.ic.sp{background:#ee4d2d}
+.ic.ml.ok{background:#ffe600;color:#15803d;display:inline-flex;align-items:center;justify-content:center;font-size:16px}
 </style>
 </head>
 <body>
@@ -80,9 +84,9 @@ Imagens (um link por linha)<textarea id="f_img" rows="3"></textarea>
                         // Se o SKU começa com MLB, significa que já está no Mercado Livre
                         const noMl = p.ml_id != null;
                         const btnAction = noMl 
-                            ? `<span class="ic ml ok" title="Já publicado no Mercado Livre">ML ✔</span>`
-                            : `<button class="ic ml" title="Publicar no Mercado Livre" onclick="publicar(${p.id})">ML</button>`;
-                        const btnShopee = `<button class="ic sp" title="Publicar na Shopee" onclick="publicarShopee(${p.id})">S</button>`;
+                            ? `<span class="ic ml ok" title="Já publicado no Mercado Livre">✔</span>`
+                            : `<button class="ic ml" title="Publicar no Mercado Livre" onclick="publicar(${p.id})"></button>`;
+                        const btnShopee = `<button class="ic sp" title="Publicar na Shopee" onclick="publicarShopee(${p.id})"></button>`;
 
                         tbody.innerHTML += `<tr>
                             <td>${p.sku || ''}</td>
