@@ -92,3 +92,7 @@ Atualizado: 17/11/2026
 Colar este arquivo na primeira mensagem e dizer: "Continue de onde parei".
 EOF
 git add -A && git commit -m "Atualiza contexto" && git push
+## Pendente: frete real (18/11/2026)
+- Conta ML tem só 1 pedido (cancelado); /orders/{id}/shipments dá 404 para cancelado.
+- Implementar busca do frete (shipping.id do pedido) quando houver a primeira venda real.
+- Shopee: aguardando criar app em open.shopee.com (Partner ID e Key em /config).
