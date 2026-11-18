@@ -1,6 +1,6 @@
 (function(){
 const l=document.createElement('link');l.rel='stylesheet';l.href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css';document.head.appendChild(l);
-const it=[['house','Dashboard','/'],['cart-shopping','Pedidos','/pedidos'],['box','Produtos','/produtos'],['tag','Etiquetas','#'],['chart-simple','Financeiro','#'],['gear','Configurações','/config'],['right-from-bracket','Sair','#']];
+const it=[['house','Dashboard','/'],['cart-shopping','Pedidos','/pedidos'],['box','Produtos','/produtos'],['bullhorn','Anúncios ML','/anuncios'],['tag','Etiquetas','#'],['chart-simple','Financeiro','#'],['gear','Configurações','/config'],['right-from-bracket','Sair','#']];
 const p=location.pathname,n=document.querySelector('nav');if(n)n.remove();
 const s=document.createElement('aside');s.id='side';
 s.innerHTML='<div class="logo"><span class="pin"><i class="fa-solid fa-car"></i></span><div><b>GPScell</b><b class="az">Store</b></div></div><p class="sub">Sua loja online, mais fácil!</p>'

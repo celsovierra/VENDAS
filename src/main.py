@@ -167,3 +167,7 @@ def importar_link(url: str):
     imgs = list(dict.fromkeys(metas("og:image") + metas("twitter:image")))
     pm = re.search(r'"price"\s*:\s*"?([0-9]+[.,]?[0-9]*)', h)
     return {"title": t, "description": d, "images": imgs[:8], "price": pm.group(1).replace(",", ".") if pm else ""}
+
+@app.get("/anuncios", include_in_schema=False)
+def anuncios_page():
+    return FileResponse("src/web/anuncios.html")

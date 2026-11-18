@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Anúncios ML</title>
+<link rel="stylesheet" href="/static/style.css">
+<style>
+table{width:100%;border-collapse:collapse;background:#fff;border-radius:10px}
+th,td{padding:10px;text-align:left;border-bottom:1px solid #e5e7eb;font-size:14px}
+.ok{color:#16a34a;font-weight:600}.pa{color:#d97706;font-weight:600}
+.nav{display:flex;gap:10px;align-items:center;margin:14px 0}
+button{background:#2563eb;color:#fff;border:0;border-radius:6px;padding:8px 14px;cursor:pointer}
+button:disabled{opacity:.4}
+</style></head><body>
+<main style="padding:24px">
+<h1>Anúncios do Mercado Livre</h1>
+<div class="nav"><button id="ant" onclick="ir(-20)">Anterior</button><span id="info">Carregando...</span><button id="prox" onclick="ir(20)">Próxima</button></div>
+<div style="overflow-x:auto"><table><thead><tr><th>ID</th><th>Título</th><th>Preço</th><th>Estoque</th><th>Status</th><th></th></tr></thead><tbody id="tb"></tbody></table></div>
+</main>
+<script>
+let off=0,total=0;
+async function carregar(){
+document.getElementById('info').textContent='Carregando...';
+const d=await (await fetch('/api/ml/anuncios?offset='+off)).json();
+total=d.total||0;
+document.getElementById('tb').innerHTML=(d.itens||[]).map(i=>`<tr><td>${i.id}</td><td>${i.title}</td><td>R$ ${Number(i.price).toFixed(2)}</td><td>${i.available_quantity}</td><td class="${i.status=='active'?'ok':'pa'}">${i.status=='active'?'Ativo':i.status=='paused'?'Pausado':i.status}</td><td><a href="${i.permalink}" target="_blank">Abrir</a></td></tr>`).join('');
+document.getElementById('info').textContent=(off+1)+' a '+Math.min(off+20,total)+' de '+total;
+document.getElementById('ant').disabled=off<=0;
+document.getElementById('prox').disabled=off+20>=total}
+function ir(n){off=Math.max(0,off+n);carregar()}
+carregar()
+</script><script src="/static/layout.js?v=10"></script></body></html>
