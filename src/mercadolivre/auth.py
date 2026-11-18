@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from src.core.database import get_db
 from src.core import models
 router = APIRouter(prefix="/api/ml")
-REDIRECT = "https://effective-guide-4j6g5jw7wv5v3qr4j-8000.app.github.dev/api/ml/callback"
+REDIRECT = "https://effective-guide-4j6g5jw7wv5v3qr4j-8001.app.github.dev/api/ml/callback"
 def get(db, k):
     r = db.get(models.Setting, k)
     return r.value if r else None
