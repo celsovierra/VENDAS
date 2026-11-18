@@ -76,6 +76,7 @@ Imagens (um link por linha)<textarea id="f_img" rows="3"></textarea>
                         const btnAction = noMl 
                             ? `<span style="color:green; font-weight:bold;">✔ No ML</span>`
                             : `<button class="btn btn-pub" onclick="publicar(${p.id})">Publicar no ML</button>`;
+                        const btnShopee = `<button class="btn btn-pub" style="background:#ee4d2d;color:#fff" onclick="publicarShopee(${p.id})">Publicar na Shopee</button>`;
 
                         tbody.innerHTML += `<tr>
                             <td>${p.sku || ''}</td>
@@ -83,7 +84,7 @@ Imagens (um link por linha)<textarea id="f_img" rows="3"></textarea>
                             <td>R$ ${(p.cost_price || 0).toFixed(2)}</td>
                             <td>R$ ${(p.sale_price || 0).toFixed(2)}</td>
                             <td>${p.stock || 0}</td>
-                            <td>${btnAction} ${p.temu_url?`<a class="btn" style="background:#fd7e14" target="_blank" href="${p.temu_url}">Comprar</a>`:''}</td>
+                            <td>${btnAction} ${btnShopee} ${p.temu_url?`<a class="btn" style="background:#fd7e14" target="_blank" href="${p.temu_url}">Comprar</a>`:''}</td>
                         </tr>`;
                     });
                 });
@@ -97,6 +98,13 @@ Imagens (um link por linha)<textarea id="f_img" rows="3"></textarea>
                     alert(res.msg);
                     carregarProdutos(); // Recarrega a lista
                 });
+        }
+
+        function publicarShopee(id) {
+            fetch(`/api/shopee/publicar/${id}`, { method: 'POST' })
+                .then(r => r.ok ? r.json() : {msg: 'Shopee ainda não conectada. Falta criar o app e salvar Partner ID e Key em /config.'})
+                .then(res => alert(res.msg))
+                .catch(() => alert('Shopee ainda não conectada.'));
         }
 
         function importarLink() {
