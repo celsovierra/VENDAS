@@ -143,3 +143,15 @@ def diag_envio(db: Session = Depends(get_db)):
     h = {"Authorization": f"Bearer {t}"}
     r = httpx.get(f"https://api.mercadolibre.com/users/{u}/shipping_preferences", headers=h, timeout=30)
     return {"status": r.status_code, "dados": r.json()}
+
+@router.get("/anuncios")
+def anuncios(offset: int = 0, db: Session = Depends(get_db)):
+    h = {"Authorization": "Bearer " + token(db)}
+    u = get(db, "ml_user_id")
+    b = httpx.get(f"https://api.mercadolibre.com/users/{u}/items/search", params={"limit": 20, "offset": offset}, headers=h, timeout=30).json()
+    ids = b.get("results", [])
+    itens = []
+    if ids:
+        d = httpx.get("https://api.mercadolibre.com/items", params={"ids": ",".join(ids), "attributes": "id,title,price,available_quantity,status,permalink"}, headers=h, timeout=30).json()
+        itens = [x["body"] for x in d if x.get("code") == 200]
+    return {"total": b.get("paging", {}).get("total"), "offset": offset, "itens": itens}
